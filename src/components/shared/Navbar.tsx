@@ -13,17 +13,19 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-void/50 backdrop-blur-md border-b border-glass-border">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link href="/" className="font-serif text-xl font-bold">PromptForge</Link>
-        <div className="flex gap-6">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-void/30 backdrop-blur-xl border-b border-glass-border/30 transition-all duration-700">
+      <div className="max-w-7xl mx-auto px-8 h-[72px] flex items-center justify-between">
+        <Link href="/" className="font-serif text-2xl font-medium tracking-tight text-text-primary hover:text-gold transition-colors duration-500">
+          PromptForge
+        </Link>
+        <div className="flex gap-10">
           {links.map((link) => (
             <Link
               key={link.name}
               href={link.path}
-              className="flex items-center gap-2 text-sm text-text-secondary hover:text-white transition-colors"
+              className="magnetic-btn flex items-center gap-2.5 text-[13px] font-medium tracking-wide uppercase text-text-secondary hover:text-gold golden-hover transition-all duration-300 px-3 py-1.5 rounded-full border border-transparent hover:border-gold/20"
             >
-              <link.icon className="w-4 h-4" />
+              <link.icon className="w-3.5 h-3.5" strokeWidth={1.5} />
               {link.name}
             </Link>
           ))}

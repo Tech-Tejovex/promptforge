@@ -28,7 +28,7 @@ export default function LandingPage() {
           <div className="flex gap-4">
             <Link href="#features" className="text-sm text-text-secondary hover:text-white transition-colors px-4 py-2">Features</Link>
             <Link href="#pricing" className="text-sm text-text-secondary hover:text-white transition-colors px-4 py-2">Pricing</Link>
-            <a href="/forge" className="text-sm bg-white text-void px-5 py-2.5 rounded-full font-medium hover:bg-[#f0f0f0] transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)]">Get Started</a>
+            <a href="/en/dashboard/forge" className="text-sm bg-white text-void px-5 py-2.5 rounded-full font-medium hover:bg-[#f0f0f0] transition-all shadow-[0_0_20px_rgba(255,255,255,0.15)]">Get Started</a>
           </div>
         </nav>
 
@@ -62,11 +62,11 @@ export default function LandingPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
             >
-              <a href="/forge" className="inline-flex items-center gap-2.5 bg-white text-void px-8 py-4 rounded-full font-semibold text-base shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:bg-[#f0f0f0] hover:shadow-[0_0_50px_rgba(255,255,255,0.35)] transition-all duration-500 hover:-translate-y-0.5">
+              <a href="/en/dashboard/forge" className="inline-flex items-center gap-2.5 bg-white text-void px-8 py-4 rounded-full font-semibold text-base shadow-[0_0_30px_rgba(255,255,255,0.2)] hover:bg-[#f0f0f0] hover:shadow-[0_0_50px_rgba(255,255,255,0.35)] transition-all duration-500 hover:-translate-y-0.5">
                 Start Forging <ArrowRight className="w-4 h-4" />
               </a>
               <Link
-                href="/forge"
+                href="/en/dashboard/forge"
                 className="inline-flex items-center gap-2.5 px-8 py-4 rounded-full border border-glass-border text-white hover:border-glow hover:bg-glass transition-all duration-300"
               >
                 Explore Features
@@ -177,7 +177,7 @@ export default function LandingPage() {
           <GlassCard className="p-12">
             <h2 className="font-serif text-4xl md:text-5xl mb-6">Start Free. Scale as you grow.</h2>
             <p className="text-text-secondary text-lg mb-8">Unlimited generations with the core engine. Pro unlocks history, favorites, multi-language, and team collaboration.</p>
-            <a href="/forge" className="inline-block bg-white text-void px-10 py-4 rounded-full font-bold text-lg hover:bg-[#f0f0f0] shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all hover:-translate-y-1">Get Started for Free</a>
+            <a href="/en/dashboard/forge" className="inline-block bg-white text-void px-10 py-4 rounded-full font-bold text-lg hover:bg-[#f0f0f0] shadow-[0_0_30px_rgba(255,255,255,0.2)] transition-all hover:-translate-y-1">Get Started for Free</a>
           </GlassCard>
         </section>
 

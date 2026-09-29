@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NoiseOverlay from "@/components/shared/NoiseOverlay";
+import Live3DBackground from "@/components/shared/Live3DBackground";
+import LuxuryCursor from "@/components/shared/LuxuryCursor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +32,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col overflow-x-hidden">
+        <LuxuryCursor />
+        <Live3DBackground />
         <NoiseOverlay />
         {children}
       </body>
