@@ -92,7 +92,7 @@ export default function ForgePage() {
       if (matches) {
         const uniqueVars: string[] = Array.from(new Set(matches.map((m: string) => m.replace(/[\{\}]/g, ""))));
         setVariableMap(uniqueVars);
-        setVariables(uniqueVars.reduce((acc: Record<string, string>, v: string) => ({ ...acc, [v]: "" }), {}));
+        setVariables(uniqueVars.reduce<Record<string, string>>((acc, v) => ({ ...acc, [v]: "" }), {}));
       } else {
         setVariableMap([]);
         setVariables({});
