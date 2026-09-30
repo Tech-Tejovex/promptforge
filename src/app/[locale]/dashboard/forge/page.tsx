@@ -88,9 +88,9 @@ export default function ForgePage() {
       setOutput(baseOutput);
 
       // Parse variables
-      const matches = baseOutput.match(/\{\{(.*?)\}\}/g);
+      const matches: RegExpMatchArray | null = baseOutput.match(/\{\{(.*?)\}\}/g);
       if (matches) {
-        const uniqueVars = Array.from(new Set(matches.map((m: string) => m.replace(/[\{\}]/g, ""))));
+        const uniqueVars: string[] = Array.from(new Set(matches.map((m: string) => m.replace(/[\{\}]/g, ""))));
         setVariableMap(uniqueVars);
         setVariables(uniqueVars.reduce((acc: Record<string, string>, v: string) => ({ ...acc, [v]: "" }), {}));
       } else {

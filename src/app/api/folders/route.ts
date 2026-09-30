@@ -11,8 +11,8 @@ export async function GET() {
     {
       cookies: {
         get(name: string) { return cookieStore.get(name)?.value; },
-        set(name: string, value: string, options: any) { cookieStore.set(name, value, options); },
-        remove(name: string, options: any) { cookieStore.delete(name, options); },
+        set(name: string, value: string, options?: any) { cookieStore.set(name, value); },
+        remove(name: string, options?: any) { cookieStore.delete(name); },
       },
     }
   );
@@ -31,8 +31,8 @@ export async function POST(req: Request) {
     {
       cookies: {
         get(name: string) { return cookieStore.get(name)?.value; },
-        set(name: string, value: string, options: any) { cookieStore.set(name, value, options); },
-        remove(name: string, options: any) { cookieStore.delete(name, options); },
+        set(name: string, value: string, options?: any) { cookieStore.set(name, value); },
+        remove(name: string, options?: any) { cookieStore.delete(name); },
       },
     }
   );
@@ -58,8 +58,8 @@ export async function PATCH(req: Request) {
     {
       cookies: {
         get(name: string) { return cookieStore.get(name)?.value; },
-        set(name: string, value: string, options: any) { cookieStore.set(name, value, options); },
-        remove(name: string, options: any) { cookieStore.delete(name, options); },
+        set(name: string, value: string, options?: any) { cookieStore.set(name, value); },
+        remove(name: string, options?: any) { cookieStore.delete(name); },
       },
     }
   );
@@ -82,8 +82,8 @@ export async function DELETE(req: Request) {
     {
       cookies: {
         get(name: string) { return cookieStore.get(name)?.value; },
-        set(name: string, value: string, options: any) { cookieStore.set(name, value, options); },
-        remove(name: string, options: any) { cookieStore.delete(name, options); },
+        set(name: string, value: string, options?: any) { cookieStore.set(name, value); },
+        remove(name: string, options?: any) { cookieStore.delete(name); },
       },
     }
   );
