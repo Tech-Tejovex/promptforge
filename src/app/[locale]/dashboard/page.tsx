@@ -55,7 +55,7 @@ export default function DashboardPage() {
       })
       .then((prompts) => {
         // Derive analytics directly from history data (same source as /history)
-        const all = Array.isArray(prompts) ? prompts : (prompts.data || []);
+        const all = Array.isArray(prompts) ? prompts : (prompts?.prompts || prompts?.data || []);
         const total = all.length;
         const optimized = all.filter((p: any) => p.is_optimized).length;
         const optimizedPercent = total ? Math.round((optimized / total) * 100) : 0;
