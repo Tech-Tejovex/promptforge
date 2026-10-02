@@ -100,12 +100,6 @@ export async function deletePrompt(id: string, userId: string): Promise<boolean>
   return true;
 }
 
-    optimizedPercent,
-    byProfession,
-    recentActivity,
-  };
-}
-
 export async function getPromptStats(userId?: string): Promise<{
   total: number;
   optimizedPercent: number;
@@ -114,7 +108,7 @@ export async function getPromptStats(userId?: string): Promise<{
 }> {
   const db = getServiceSupabase();
 
-  let query = db.from("prompts");
+  let query: any = db.from("prompts");
   if (userId) {
     query = query.eq("user_id", userId);
   }
