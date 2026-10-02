@@ -17,30 +17,47 @@ export default function DashboardPage() {
 
   useEffect(() => {
     fetch("/api/auth/session", { credentials: "include" })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Session request failed: " + res.status);
+        return res.json();
+      })
       .then((data) => {
         console.log("SESSION RESPONSE:", data);
         if (data?.user?.id) {
           setUserId(data.user.id);
-        } else if (data?.user === null) {
+        } else {
           console.log("No user logged in — showing empty stats");
           setUserId(null);
           setStats({ total: 0, optimizedPercent: 0, byProfession: [], recentActivity: [] });
           setLoading(false);
         }
       })
-      .catch((e) => console.error("Session fetch error:", e));
+      .catch((e) => {
+        console.error("Session fetch error:", e);
+        setUserId(null);
+        setStats({ total: 0, optimizedPercent: 0, byProfession: [], recentActivity: [] });
+        setLoading(false);
+      });
   }, []);
 
   useEffect(() => {
+    if (userId === null) {
+      setStats({ total: 0, optimizedPercent: 0, byProfession: [], recentActivity: [] });
+      setLoading(false);
+      return;
+    }
     if (!userId) return;
     fetch(`/api/prompts/stats?userId=${userId}`, { credentials: "include" })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error("Stats request failed: " + res.status);
+        return res.json();
+      })
       .then((data) => {
         setStats(data);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((e) => {
+        console.error("Stats fetch error:", e);
         toast.error("Failed to load analytics");
         setLoading(false);
       });
