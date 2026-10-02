@@ -47,13 +47,24 @@ export default function DashboardPage() {
       return;
     }
     if (!userId) return;
-    fetch(`/api/prompts/stats?userId=${userId}`, { credentials: "include" })
+    // Analytics pulls directly from user history (same DB table as /history)
+    fetch(`/api/prompts?userId=${userId}&limit=1000`, { credentials: "include" })
       .then((res) => {
         if (!res.ok) throw new Error("Stats request failed: " + res.status);
         return res.json();
       })
-      .then((data) => {
-        setStats(data);
+      .then((prompts) => {
+        // Derive analytics directly from history data (same source as /history)
+        const all = Array.isArray(prompts) ? prompts : (prompts.data || []);
+        const total = all.length;
+        const optimized = all.filter((p: any) => p.is_optimized).length;
+        const optimizedPercent = total ? Math.round((optimized / total) * 100) : 0;
+        const profMap: Record<string, number> = {};
+        all.forEach((p: any) => { profMap[p.profession] = (profMap[p.profession] || 0) + 1; });
+        const byProfession = Object.entries(profMap).map(([name, count]) => ({ name, count })).sort((a: any, b: any) => b.count - a.count);
+        const recentActivity: { date: string; count: number }[] = [];
+        for (let i = 6; i >= 0; i--) { const d = new Date(); d.setDate(d.getDate() - i); const dateStr = d.toISOString().split("T")[0]; const dayCount = all.filter((p: any) => p.created_at?.startsWith(dateStr)).length; recentActivity.push({ date: dateStr, count: dayCount }); }
+        setStats({ total, optimizedPercent, byProfession, recentActivity });
         setLoading(false);
       })
       .catch((e) => {
