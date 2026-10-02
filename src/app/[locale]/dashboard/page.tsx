@@ -16,15 +16,20 @@ export default function DashboardPage() {
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    // Get current user ID from Supabase auth
     fetch("/api/auth/session", { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
+        console.log("SESSION RESPONSE:", data);
         if (data?.user?.id) {
           setUserId(data.user.id);
+        } else if (data?.user === null) {
+          console.log("No user logged in — showing empty stats");
+          setUserId(null);
+          setStats({ total: 0, optimizedPercent: 0, byProfession: [], recentActivity: [] });
+          setLoading(false);
         }
       })
-      .catch(() => {});
+      .catch((e) => console.error("Session fetch error:", e));
   }, []);
 
   useEffect(() => {

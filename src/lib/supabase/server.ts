@@ -19,3 +19,9 @@ export async function createClient() {
     }
   );
 }
+
+export async function getCurrentUserId(): Promise<string | null> {
+  const client = await createClient();
+  const { data: { user } } = await client.auth.getUser();
+  return user?.id || null;
+}

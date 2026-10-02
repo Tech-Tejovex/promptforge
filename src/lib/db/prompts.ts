@@ -100,6 +100,12 @@ export async function deletePrompt(id: string, userId: string): Promise<boolean>
   return true;
 }
 
+    optimizedPercent,
+    byProfession,
+    recentActivity,
+  };
+}
+
 export async function getPromptStats(userId?: string): Promise<{
   total: number;
   optimizedPercent: number;
@@ -109,27 +115,17 @@ export async function getPromptStats(userId?: string): Promise<{
   const db = getServiceSupabase();
 
   let query = db.from("prompts");
-
-  // Filter by user if provided
   if (userId) {
     query = query.eq("user_id", userId);
   }
 
-  // Total count
-  const { count: total } = await query
-    .select("*", { count: "exact", head: true });
-
-  // All prompts for aggregation
-  const { data: all } = await query
-    .select("profession, is_optimized, created_at");
+  const { count: total } = await query.select("*", { count: "exact", head: true });
+  const { data: all } = await query.select("profession, is_optimized, created_at");
 
   const prompts = all || [];
-
-  // Optimized percentage
   const optimized = prompts.filter((p: any) => p.is_optimized).length;
   const optimizedPercent = total ? Math.round((optimized / total) * 100) : 0;
 
-  // Group by profession
   const profMap: Record<string, number> = {};
   prompts.forEach((p: any) => {
     profMap[p.profession] = (profMap[p.profession] || 0) + 1;
@@ -138,7 +134,6 @@ export async function getPromptStats(userId?: string): Promise<{
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => b.count - a.count);
 
-  // Recent activity (last 7 days)
   const recentActivity: { date: string; count: number }[] = [];
   for (let i = 6; i >= 0; i--) {
     const d = new Date();
