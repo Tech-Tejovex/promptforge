@@ -13,19 +13,33 @@ import { toast } from "sonner";
 export default function DashboardPage() {
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch("/api/prompts/stats", { credentials: "include" })
+    // Get current user ID from Supabase auth
+    fetch("/api/auth/session", { credentials: "include" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.user?.id) {
+          setUserId(data.user.id);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    if (!userId) return;
+    fetch(`/api/prompts/stats?userId=${userId}`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         setStats(data);
         setLoading(false);
       })
       .catch(() => {
-        toast.error("Failed to load dashboard stats");
+        toast.error("Failed to load analytics");
         setLoading(false);
       });
-  }, []);
+  }, [userId]);
 
   if (loading) return (
     <div className="min-h-screen bg-void text-text-primary p-6 pt-10 flex items-center justify-center">

@@ -100,7 +100,7 @@ export async function deletePrompt(id: string, userId: string): Promise<boolean>
   return true;
 }
 
-export async function getPromptStats(): Promise<{
+export async function getPromptStats(userId?: string): Promise<{
   total: number;
   optimizedPercent: number;
   byProfession: { name: string; count: number }[];
@@ -108,14 +108,19 @@ export async function getPromptStats(): Promise<{
 }> {
   const db = getServiceSupabase();
 
+  let query = db.from("prompts");
+
+  // Filter by user if provided
+  if (userId) {
+    query = query.eq("user_id", userId);
+  }
+
   // Total count
-  const { count: total } = await db
-    .from("prompts")
+  const { count: total } = await query
     .select("*", { count: "exact", head: true });
 
   // All prompts for aggregation
-  const { data: all } = await db
-    .from("prompts")
+  const { data: all } = await query
     .select("profession, is_optimized, created_at");
 
   const prompts = all || [];
